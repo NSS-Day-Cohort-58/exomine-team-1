@@ -13,10 +13,13 @@ let facilities = getFacilities()
 export const facilitiesHtml = () => {
     let htmlString = `<h3>Facilities</h3><select id="facilitySelect">
     <option value="">Choose One</option>`
-
+    
     for (const facility of facilities) {
+        if (facility.active === true) {
         htmlString += `<option value="${facility.id}">${facility.name}</option>`
     }
-    htmlString += `</select>`
+
+}
+htmlString += `</select>`
     return htmlString
 }
