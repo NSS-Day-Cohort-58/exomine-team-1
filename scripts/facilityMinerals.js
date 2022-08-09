@@ -18,35 +18,53 @@ const facilityMinerals = () => {
     let facilities = getFacilities()
     let minerals = getMinerals()
    
-   let HTMLstr = ""
+    let HTMLstr = ""
+    let facilityArray = [] //will use this empty array to push facMineralObjects with matching facilityIds into it
+for (let facMineral of facMinerals) {
 
-   for (let mineral of facMinerals) {
     const foundMineral = minerals.find( 
         (min) => {
-            return min.id === mineral.mineralId //this locates the mineralObject id and matches it to the mineralId from facilityMineralObject
+            return min.id === facMineral.mineralId //this locates the mineralObject id and matches it to the mineralId from facMineralObject
         }
     )
     mineralName = foundMineral.name //this takes that found mineralObject and sets its name to a variable
 
     const foundFacility = facilities.find(
         (facility) => {
-            return facility.id === mineral.facilityId
+            return facility.id === facMineral.facilityId
         }
     )
 
     facilityName = foundFacility.name
-
-
-
-    HTMLstr += `<div>Facility Minerals for ${facilityName}</div>
-    if foundMineral 
-    <li>
-        <input type="radio" name="mineral" value="${mineral.id}" /> ${mineral.quantity} tons of ${mineralName}
-    </li>`
-    }
-    
+  
+    for (let facility of facilities) //iterate facilities array to find matching facilityIds in the facilityMinerals array
+        if (facility.id === facMineral.facilityId) {
+            facilityArray.push(facMineral) //add those facMineralObjects with the matching facilityIds to the empty array above
+            HTMLstr += `<div>Facility Minerals for ${facilityName}</div>`
+            for (let facility in facilityArray) {//iterating the newly made array with matching facility Ids
+                
+                const foundInnerMineral = minerals.find(
+                    (min) => {
+                        return min.id === facility.mineralId
+                    }
+                )
+                innerMineralName = foundInnerMineral.name
+            
+                HTMLstr +=`<li>
+                    <input type="radio" name="mineral" value="${facility.mineralId}" /> ${facility.quantity} tons of ${innerMineralName}
+                </li>`
+            }
+        }
+        else {
+            HTMLstr += `<div>Facility Minerals for ${facilityName}</div>`
+            `<li>
+            <input type="radio" name="mineral" value="${facMineral.mineralid}" /> ${facMineral.quantity} tons of ${mineralName}
+            </li>`
+        }}
     return HTMLstr
 }
+
+
 
 
 document.addEventListener( 
@@ -63,7 +81,10 @@ document.addEventListener(
 
 /*ALGORITHM
 create a funciton that iterates the facilityMinerals array 
-create HTML string for minerals 
-use .find to match mineralId with mineral.id and facility.id with facilityId
+create an empty array and set to matchingFacilities variable
+if facility ids are matching, then push them into the empty array.
+
+
+function must pull all matching facilities (by id) and iterate through them to display all mineralIds and their quantity for a given facility
 
 */
