@@ -1,4 +1,4 @@
-import { getGovernors, setGovernor } from "./database.js"
+import { getGovernors } from "./database.js"
 
 const governors = getGovernors()
 
@@ -9,7 +9,9 @@ export const governorsHtml = () => {
     ${
         governors.map(
             governor => {
+                if(governor.active === true){
                 return `<option value="${governor.id}">${governor.name}</option>`
+                }
             }
         ).join("")
     }
@@ -17,11 +19,14 @@ export const governorsHtml = () => {
     </select>`
 }
 
+//set main container
+const mainContainer = document.querySelector("#container")
+
 //change event listener to set the GovernorId in transient state
 mainContainer.addEventListener(
     "change",
     (event) => {
         if (event.target.id === "governorSelect"){
-            setGovernor(parseInt(event.target.value))
+            // setGovernor(parseInt(event.target.value))
         }
     })
