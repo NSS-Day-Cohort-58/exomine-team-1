@@ -9,9 +9,9 @@ const database = {
         {id: 6, name: "Jonathan Woodard", active: true, colonyId: 7},
         {id: 7, name: "Nora Szeto", active: true, colonyId: 3},
         {id: 8, name: "Steve Brownlee", active: true, colonyId: 5}, 
-        {id: 8, name: "Val Freeman", active: false, colonyId: 3}, 
-        {id: 8, name: "Caroline Madison", active: true, colonyId: 4},
-        {id: 8, name: "Devin Kent", active: false, colonyId: 4} 
+        {id: 9, name: "Val Freeman", active: false, colonyId: 3}, 
+        {id: 10, name: "Caroline Madison", active: true, colonyId: 4},
+        {id: 11, name: "Devin Kent", active: false, colonyId: 4} 
     ],
     colonies: [
         {
