@@ -1,4 +1,4 @@
-import { getGovernors } from "./database.js"
+import { getGovernors, getColonies } from "./database.js"
 
 const governors = getGovernors()
 
@@ -18,6 +18,23 @@ export const governorsHtml = () => {
 
     </select>`
 }
+
+let colonies = getColonies()
+//Change Event listener to change the Colony name to depending on the Governor who is currently selected 
+document.addEventListener("change", (changeEvent) => {
+    const colonyNameChange = document.querySelector('.colony-mineral-heading')
+    if (changeEvent.target.id === "governorSelect") {
+        for (const governor of governors) {
+            if (parseInt(changeEvent.target.value) === governor.id) {
+            for (const colony of colonies) {
+                if (governor.colonyId === colony.id) {
+                    colonyNameChange.innerText = `${colony.name} Minerals`
+            }
+        }
+    }
+    }
+}
+})
 
 //set main container
 const mainContainer = document.querySelector("#container")
