@@ -146,11 +146,58 @@ export const setFacilityMineral= (facilityMineralId) => {
 
 
 
+//Function that will be called when the button is clicked
 export const purchaseMineral = () => {
+
+    // Copy the current state of user choices
+    const state = {...database.transientState}
+
+    //bring in colonyMinerals, facilityMinerals
+    let colonyMinerals = getColonyMinerals()
+    let facilityMinerals = getFacilityMinerals()
+
+    //establish a boolean variable to see if there's an existing colonyMineral
+    let foundColonyMineral = false
+
+    //look through colonyMinerals, finding where the colonyId and mineralId match transient state
+    // using forEach to look through the copy of colonyMinerals
+    // then using the index parameter to modify the correct record in the real database's colonyminerals
+    colonyMinerals.forEach((colonyMineral, index) =>  {
+        if(colonyMineral.colonyId === state.selectedColony){
+            if(colonyMineral.mineralId === state.selectedMineral){
+                foundColonyMineral = true
+                database.colonyMinerals[index].quantity++ //increase the quantity
+            }
+        } 
+    })
+
+    //if the colonyMineral didn't exist yet, create it
+    if(foundColonyMineral === false){
+        database.colonyMinerals.push(
+            {
+                id: database.colonyMinerals.length + 1,
+                mineralId: state.selectedMineral,
+                colonyId: state.selectedColony,
+                quantity: 1
+            }
+        )
+    }
+
+    //look through the facilityMinerals to find the one that was purchased and decrease the quantity
+    // using forEach to look through the copy of facilityMinerals
+    // then using the index parameter to modify the correct record in the real database's facilityMinerals
+    facilityMinerals.forEach((facilityMineral, index) => {
+        if(facilityMineral.facilityId === state.selectedFacility){
+            if(facilityMineral.mineralId === state.selectedMineral){
+                database.facilityMinerals[index].quantity--
+            }
+        }
+    })
+
+    //reset transient state
+    database.transientState = {}
 
         // Broadcast custom event to entire documement so that the
         // application can re-render and update state
         document.dispatchEvent( new CustomEvent("stateChanged") )
-    }
-
-
+}
