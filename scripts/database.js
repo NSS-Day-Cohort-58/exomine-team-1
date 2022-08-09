@@ -87,16 +87,16 @@ const database = {
         {id: 11, colonyId: 7, mineralId: 1, quantity: 0}
     ],
     facilityMinerals: [
-        {id: 1, facilityId: 1, mineralId: 4, quantity: 0},
-        {id: 2, facilityId: 2, mineralId: 5, quantity: 0},
-        {id: 3, facilityId: 3, mineralId: 2, quantity: 0},
-        {id: 4, facilityId: 1, mineralId: 1, quantity: 0},
-        {id: 5, facilityId: 4, mineralId: 1, quantity: 0},
-        {id: 6, facilityId: 1, mineralId: 2, quantity: 0},
-        {id: 7, facilityId: 5, mineralId: 1, quantity: 0},
-        {id: 8, facilityId: 5, mineralId: 3, quantity: 0},
-        {id: 9, facilityId: 2, mineralId: 1, quantity: 0},
-        {id: 10, facilityId: 1, mineralId: 1, quantity: 0}
+        {id: 1, facilityId: 1, mineralId: 4, quantity: 34},
+        {id: 2, facilityId: 2, mineralId: 5, quantity: 12},
+        {id: 3, facilityId: 3, mineralId: 2, quantity: 65},
+        {id: 4, facilityId: 1, mineralId: 1, quantity: 200},
+        {id: 5, facilityId: 4, mineralId: 1, quantity: 15},
+        {id: 6, facilityId: 1, mineralId: 2, quantity: 8},
+        {id: 7, facilityId: 5, mineralId: 1, quantity: 41},
+        {id: 8, facilityId: 5, mineralId: 3, quantity: 60},
+        {id: 9, facilityId: 2, mineralId: 1, quantity: 984},
+        {id: 10, facilityId: 1, mineralId: 1, quantity: 49}
     ]
 }
 
@@ -126,8 +126,8 @@ export const setFacility = (facilityId) => {
     document.dispatchEvent( new CustomEvent("stateChanged") )
 }
 
-export const setGovernor = (governorId) => {
-    database.transientState.selectedGovernor = governorId
+export const setColony = (colonyId) => {
+    database.transientState.selectedColony = colonyId
     document.dispatchEvent( new CustomEvent("stateChanged") )
 }
 
@@ -156,7 +156,7 @@ export const purchaseMineral = () => {
     let colonyMinerals = getColonyMinerals()
     let facilityMinerals = getFacilityMinerals()
 
-    //establish a boolean variable to see if there's an existing colonyMineral
+    //establish a boolean variable to see if there's an existing colonyMineral in the database
     let foundColonyMineral = false
 
     //look through colonyMinerals, finding where the colonyId and mineralId match transient state
@@ -194,8 +194,8 @@ export const purchaseMineral = () => {
         }
     })
 
-    //reset facilityMineral in transient state, but keep the facility and governor
-    database.transientState.selectedFacilityMineral = ""
+    //reset mineral in transient state, but keep the facility and governor (events will update state of all if they change facility of governor)
+    database.transientState.selectedMineral = ""
 
         // Broadcast custom event to entire documement so that the
         // application can re-render and update state

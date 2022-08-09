@@ -1,13 +1,14 @@
 import { governorsHtml } from "./governors.js"
 import { facilitiesHtml } from "./facilities.js"
-import {facilityMinerals} from "./facilityMinerals.js"
+import { facilityMinerals } from "./facilityMinerals.js"
+import { shoppingCart } from "./shoppingCart.js"
 
 export const exomine = () => {
     return `<div class="first-row">
         <article class="governors">${governorsHtml()}</article>
     </div>
         <article class="second-row">${facilitiesHtml()}</article>
-        <article class="facility-minerals">${facilityMinerals()}</article>
+        <article class="facility-minerals">${facilityMinerals()}${shoppingCart()}</article>
     </div>`
 }
 
