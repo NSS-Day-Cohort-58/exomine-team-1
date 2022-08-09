@@ -194,8 +194,8 @@ export const purchaseMineral = () => {
         }
     })
 
-    //reset transient state
-    database.transientState = {}
+    //reset facilityMineral in transient state, but keep the facility and governor
+    database.transientState.selectedFacilityMineral = ""
 
         // Broadcast custom event to entire documement so that the
         // application can re-render and update state
