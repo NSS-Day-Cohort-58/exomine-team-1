@@ -102,11 +102,17 @@ const database = {
 
 
 export const getTransientState = () => {
-    return structuredClone(database.transientState)
+    return structuredClone(database.transientState) 
 }
 export const getFacilities = () => {
     return database.facilities.map(facility => ({...facility}))
 }
+
+export const getColonies = () => {
+    return database.colonies.map(colony => ({...colony}))
+}
+
+
 export const getGovernors = () => {
     return database.governors.map(governor => ({...governor}))
 }
