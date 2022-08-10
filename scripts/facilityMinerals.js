@@ -11,6 +11,7 @@ export const facilityMinerals = () => { //creates the facility mineral header an
     let minerals = getMinerals()
     const transientState = getTransientState()
 
+
     let HTMLstr = ""
     for (let facility of facilities) {
         if (facility.id === transientState.selectedFacility) {
@@ -19,8 +20,12 @@ export const facilityMinerals = () => { //creates the facility mineral header an
                 if (facility.id === facilityMineral.facilityId) {
                     for (let mineral of minerals) {
                         if (mineral.id === facilityMineral.mineralId && facilityMineral.quantity > 0) {
+                            let selected = ""
+                            if(transientState.selectedMineral === mineral.id){
+                                selected = "checked"
+                            }
                             HTMLstr +=`<li>
-                            <input type="radio" name="mineral" value="${facilityMineral.mineralId}" /> ${facilityMineral.quantity} tons of ${mineral.name}
+                            <input ${selected} type="radio" name="mineral" value="${facilityMineral.mineralId}" /> ${facilityMineral.quantity} tons of ${mineral.name}
                             </li>`
                         }
                     }
