@@ -132,6 +132,10 @@ export const setFacility = (facilityId) => {
     document.dispatchEvent( new CustomEvent("stateChanged") )
 }
 
+export const setGovernor = (governorId) => {
+    database.transientState.selectedGovernor = governorId
+    document.dispatchEvent( new CustomEvent("stateChanged") )
+}
 export const setColony = (colonyId) => {
     database.transientState.selectedColony = colonyId
     document.dispatchEvent( new CustomEvent("stateChanged") )
