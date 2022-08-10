@@ -1,16 +1,16 @@
-import { getGovernors, getColonies } from "./database.js"
+import { getGovernors, setColony, getColonies } from "./database.js"
 
 const governors = getGovernors()
 
-//function that creates the html for the governors dropdown
+//define and export a function that creates the html for the governors dropdown
 export const governorsHtml = () => {
     return `<h3>Governors</h3><select id="governorSelect">
     <option value="">Choose One</option>
     ${
         governors.map(
             governor => {
-                if(governor.active === true){
-                return `<option value="${governor.id}">${governor.name}</option>`
+                if(governor.active === true){ //only if the governor is active
+                return `<option value="${governor.colonyId}">${governor.name}</option>`
                 }
             }
         ).join("")
@@ -39,11 +39,11 @@ document.addEventListener("change", (changeEvent) => {
 //set main container
 const mainContainer = document.querySelector("#container")
 
-//change event listener to set the GovernorId in transient state
+//change event listener to set the governor's associated colonyId in transient state
 mainContainer.addEventListener(
     "change",
     (event) => {
         if (event.target.id === "governorSelect"){
-            // setGovernor(parseInt(event.target.value))
+            setColony(parseInt(event.target.value))
         }
     })
