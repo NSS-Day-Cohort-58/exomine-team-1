@@ -18,3 +18,6 @@ export const exomine = () => {
 
 <article class="facility-minerals">${facilityMinerals()}</article>
 <article class="space-cart">${spaceCart()}</article> */}
+
+
+
