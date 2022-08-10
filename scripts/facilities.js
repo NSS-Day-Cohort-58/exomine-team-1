@@ -12,7 +12,11 @@ let facilities = getFacilities()
 // *Return htmlString variable. 
 export const facilitiesHtml = () => {
     let state = getTransientState()
-    let htmlString = `<h3>Facilities</h3><select id="facilitySelect">
+    let dropdownStatus = "disabled"
+    if (state.selectedGovernor) {
+        dropdownStatus = ""
+    }
+    let htmlString = `<h3>Facilities</h3><select ${dropdownStatus} id="facilitySelect">
     <option value="">Choose One</option>`
     
     for (const facility of facilities) {

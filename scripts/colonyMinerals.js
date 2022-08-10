@@ -30,7 +30,10 @@ let transientState = getTransientState()
                 let foundMineral = minerals.find(mineral => {return mineral.id === colonyMineral.mineralId})
                 if(colonyMineral.quantity === 1){
                     htmlString += `<li>${colonyMineral.quantity} ton of ${foundMineral.name}</li>`
-                } else {
+                } else if (colonyMineral.quantity === 0){
+                    
+                }
+                else  {
                     htmlString += `<li>${colonyMineral.quantity} tons of ${foundMineral.name}</li>`
                 }
             }
