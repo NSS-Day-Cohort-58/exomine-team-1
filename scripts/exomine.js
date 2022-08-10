@@ -1,3 +1,4 @@
+// importing functions from other modules
 import { governorsHtml } from "./governors.js"
 import { facilitiesHtml } from "./facilities.js"
 import { facilityMinerals } from "./facilityMinerals.js"
