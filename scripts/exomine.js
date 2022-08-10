@@ -9,10 +9,12 @@ export const exomine = () => {
         <article class="governors">${governorsHtml()}</article>
     </div>
     <article class="colony-minerals">
-        ${colonyInventory()}
-        </article>
+        <h3 class="colony-mineral-heading">Colony Minerals</h3></article>
         <article class="second-row">${facilitiesHtml()}</article>
-        <article class="facility-minerals">${facilityMinerals()}${shoppingCart()}</article>
+    </div>
+    <div class="third-row">
+        <article class="facility-minerals">${facilityMinerals()}</article>
+        <article class="shopping-cart">${shoppingCart()}</article>
     </div>`
 }
 
