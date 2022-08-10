@@ -10,9 +10,9 @@ export const governorsHtml = () => {
     ${
         governors.map(
             governor => {
-                let selected = ""
+                let selected = "" //will use this to add selected property only on the option that matches state (if any)
                 if(governor.id === state.selectedGovernor){
-                    selected = "selected"
+                    selected = "selected" //setting this to "selected" if it matches state
                 }
                 if(governor.active === true){ //only if the governor is active
                 return `<option value="${governor.id}--${governor.colonyId}" ${selected}>${governor.name}</option>`
