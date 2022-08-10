@@ -5,7 +5,7 @@ import {getFacilityMinerals, getFacilities, getMinerals, setMineral, getTransien
 
         
 
-export const facilityMinerals = () => {
+export const facilityMinerals = () => { //creates the facility mineral header and radio buttons depending on what facility was clicked
     let facilityMinerals = getFacilityMinerals()
     let facilities = getFacilities()
     let minerals = getMinerals()
@@ -38,7 +38,7 @@ document.addEventListener(
     "change",
     (event) => {
         if (event.target.name === "mineral") {
-            setMineral(parseInt(event.target.value)) 
+            setMineral(parseInt(event.target.value))  //pushes selectedMineral key into transient state
         }
         
     }
