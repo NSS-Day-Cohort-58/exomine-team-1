@@ -10,7 +10,7 @@ export const facilityMinerals = () => { //creates the facility mineral header an
     let facilities = getFacilities()
     let minerals = getMinerals()
     const transientState = getTransientState()
-   
+
     let HTMLstr = ""
     for (let facility of facilities) {
         if (facility.id === transientState.selectedFacility) {
@@ -31,7 +31,6 @@ export const facilityMinerals = () => { //creates the facility mineral header an
     return HTMLstr
 }
 
-  
 
 
 document.addEventListener( 
