@@ -10,6 +10,7 @@ export const exomine = () => {
     </div>
     <article class="colony-minerals">
         ${colonyInventory()}
+        </article>
         <article class="second-row">${facilitiesHtml()}</article>
         <article class="facility-minerals">${facilityMinerals()}${shoppingCart()}</article>
     </div>`

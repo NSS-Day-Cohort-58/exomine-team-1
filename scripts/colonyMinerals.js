@@ -7,13 +7,13 @@ let minerals = getMinerals()
 let colonies = getColonies()
 let colonyMinerals = getColonyMinerals()
 
+
 //Change Event listener to change the Colony name to depending on the Governor who is currently selected 
 
 // when a governor is selected, display the name of their colony 
 
 export const colonyInventory = () => {
     let htmlString = ""
-    let quantityCounter = 0
 let transientState = getTransientState()
 
     if (transientState.selectedGovernor) {
@@ -24,18 +24,18 @@ let transientState = getTransientState()
                     htmlString += `<h3>${colony.name} minerals</h3>`
                 }
             }
-    if (transientState.selectedMineral) {
         for (const colonyMineral of colonyMinerals) {
-            if (transientState.selectedMineral === colonyMineral.mineralId) {
-                let foundMineral = minerals.find(mineral => {return mineral.id === transientState.selectedMineral})
-                htmlString += `<li>${quantityCounter} tons of ${foundMineral.name}</li>`
+            if (transientState.selectedColony === colonyMineral.colonyId) {
+                let foundMineral = minerals.find(mineral => {return mineral.id === colonyMineral.mineralId})
+                htmlString += `<li>${colonyMineral.quantity} tons of ${foundMineral.name}</li>`
             }
         }
-    }
+    
             }
         }
-return htmlString
+
     }
+    return htmlString
     }
 
 
