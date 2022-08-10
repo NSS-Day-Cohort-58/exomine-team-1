@@ -3,6 +3,7 @@ import {getFacilityMinerals, getFacilities, getMinerals, setMineral, getTransien
 
 
 
+        
 
 export const facilityMinerals = () => {
     let facilityMinerals = getFacilityMinerals()
@@ -13,11 +14,11 @@ export const facilityMinerals = () => {
     let HTMLstr = ""
     for (let facility of facilities) {
         if (facility.id === transientState.selectedFacility) {
-            HTMLstr +=`<div>Facility Minerals for ${facility.name}</div>`
+            HTMLstr +=`<h3>Facility Minerals for ${facility.name}</h3>`
             for (let facilityMineral of facilityMinerals) {
                 if (facility.id === facilityMineral.facilityId) {
                     for (let mineral of minerals) {
-                        if (mineral.id === facilityMineral.mineralId) {
+                        if (mineral.id === facilityMineral.mineralId && facilityMineral.quantity > 0) {
                             HTMLstr +=`<li>
                             <input type="radio" name="mineral" value="${facilityMineral.mineralId}" /> ${facilityMineral.quantity} tons of ${mineral.name}
                             </li>`
@@ -29,6 +30,7 @@ export const facilityMinerals = () => {
     }
     return HTMLstr
 }
+
   
 
 
@@ -42,13 +44,15 @@ document.addEventListener(
     }
 )
 
+
 document.addEventListener( 
     "change",
     (event) => {
         if (event.target.id === "facilitySelect") {
-            setFacility(parseInt(event.target.value)) 
+            setFacility(parseInt(event.target.value)) //pushes selectedFacility key into transient state  
         }
-        
     }
 )
-  
+
+
+

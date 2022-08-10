@@ -9,6 +9,7 @@ export const exomine = () => {
     <article class="colony-minerals">
         <h3 class="colony-mineral-heading">Colony Minerals</h3></article>
         <article class="second-row">${facilitiesHtml()}</article>
+        
         <article class="facility-minerals">${facilityMinerals()}</article>
     </div>`
 }
@@ -17,3 +18,6 @@ export const exomine = () => {
 
 <article class="facility-minerals">${facilityMinerals()}</article>
 <article class="space-cart">${spaceCart()}</article> */}
+
+
+
