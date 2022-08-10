@@ -93,10 +93,10 @@ const database = {
         {id: 4, facilityId: 1, mineralId: 1, quantity: 200},
         {id: 5, facilityId: 4, mineralId: 1, quantity: 15},
         {id: 6, facilityId: 1, mineralId: 2, quantity: 8},
-        {id: 7, facilityId: 5, mineralId: 1, quantity: 41},
+        {id: 7, facilityId: 3, mineralId: 5, quantity: 41},
         {id: 8, facilityId: 5, mineralId: 3, quantity: 60},
         {id: 9, facilityId: 2, mineralId: 1, quantity: 984},
-        {id: 10, facilityId: 1, mineralId: 1, quantity: 49}
+        {id: 10, facilityId: 1, mineralId: 3, quantity: 49}
     ]
 }
 
@@ -132,6 +132,10 @@ export const setFacility = (facilityId) => {
     document.dispatchEvent( new CustomEvent("stateChanged") )
 }
 
+export const setGovernor = (governorId) => {
+    database.transientState.selectedGovernor = governorId
+    document.dispatchEvent( new CustomEvent("stateChanged") )
+}
 export const setColony = (colonyId) => {
     database.transientState.selectedColony = colonyId
     document.dispatchEvent( new CustomEvent("stateChanged") )
