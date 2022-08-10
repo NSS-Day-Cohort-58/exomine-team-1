@@ -23,14 +23,14 @@ export const governorsHtml = () => {
 
     </select>`
 }
-
+let transientState = getTransientState()
 let colonies = getColonies()
 //Change Event listener to change the Colony name to depending on the Governor who is currently selected 
 document.addEventListener("change", (changeEvent) => {
-    const colonyNameChange = document.querySelector('.colony-mineral-heading')
+    const colonyNameChange = document.querySelector('.colony-minerals')
     if (changeEvent.target.id === "governorSelect") {
         for (const governor of governors) {
-            if (parseInt(changeEvent.target.value) === governor.id) {
+            if (transientState.selectedGovernor === governor.id) {
             for (const colony of colonies) {
                 if (governor.colonyId === colony.id) {
                     colonyNameChange.innerText = `${colony.name} Minerals`
