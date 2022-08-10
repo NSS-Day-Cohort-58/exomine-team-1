@@ -6,11 +6,15 @@ import { shoppingCart } from "./shoppingCart.js"
 export const exomine = () => {
     return `<div class="first-row">
         <article class="governors">${governorsHtml()}</article>
-    </div>
-    <article class="colony-minerals">
+        <article class="colony-minerals">
         <h3 class="colony-mineral-heading">Colony Minerals</h3></article>
+    </div>
+    <div class="second-row">
         <article class="second-row">${facilitiesHtml()}</article>
-        <article class="facility-minerals">${facilityMinerals()}${shoppingCart()}</article>
+    </div>
+    <div class="third-row">
+        <article class="facility-minerals">${facilityMinerals()}</article>
+        <article class="shopping-cart">${shoppingCart()}</article>
     </div>`
 }
 

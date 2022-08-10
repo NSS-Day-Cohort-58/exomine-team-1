@@ -1,0 +1,50 @@
+body,
+button,
+select {
+	color: #404040;
+	font-family: "Comfortaa", Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Patua One", serif;
+    letter-spacing: 2px;
+  }
+
+header {
+    font-family: "Patua One", serif;
+    letter-spacing: 2px;
+    font-size: 28px; 
+}
+
+.first-row {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.third-row {
+    display: flex; 
+    justify-content: space-between; 
+}
+
+.facility-minerals {
+    border: dashed thin #6b00b3;
+    padding: 2em; 
+    margin-top: 2em;
+    margin-left: 3em; 
+    
+}
+
+.shopping-cart {
+    border: dashed thin #009999; 
+    padding: 2em; 
+    margin-top: 2em;
+    margin-right: 3em; 
+    text-align: center;
+}
+
+.colony-mineral-heading {
+    padding: 2em;
+    margin-right: 3em;
+}
