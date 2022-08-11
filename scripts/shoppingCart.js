@@ -6,10 +6,13 @@ export const shoppingCart = () => {
     let facilities = getFacilities()
     let minerals = getMinerals()
     let htmlString = '<div class="cart"><h3>Space Cart</h3>'
-    if(state.selectedFacility && state.selectedMineral){ //if state contains a facility and mineral,
-        let foundMineral = minerals.find(mineral => {return mineral.id === state.selectedMineral}) //find those objects
-        let foundFacility = facilities.find(facility => {return facility.id === state.selectedFacility})
-        htmlString += `<p>One ton of ${foundMineral.name} from ${foundFacility.name}</p><button id='purchaseButton'>Purchase Mineral!</button></div>` //and make the html
+    if(state.shoppingCart.length > 0){ //if state contains a facility and mineral,
+        for(const fm of state.shoppingCart){
+            let foundMineral = minerals.find(mineral => {return mineral.id === fm.mineralId}) //find those objects
+            let foundFacility = facilities.find(facility => {return facility.id === fm.facilityId})
+            htmlString += `<p>One ton of ${foundMineral.name} from ${foundFacility.name}</p>` //and make the html
+        }
+        htmlString += `<button id='purchaseButton'>Purchase Mineral!</button></div>`
     } else {
         htmlString += `</div>`
     }
