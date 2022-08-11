@@ -1,4 +1,4 @@
-import { getGovernors, setColony, getColonies, getTransientState, setGovernor } from "./database.js"
+import { getGovernors, setColony, getTransientState, setGovernor, clearShoppingCart } from "./database.js"
 
 const governors = getGovernors()
 
@@ -34,5 +34,6 @@ document.addEventListener(
             let [governorId, colonyId] = event.target.value.split("--")
             setColony(parseInt(colonyId))
             setGovernor(parseInt(governorId))
+            clearShoppingCart()
         }
     })

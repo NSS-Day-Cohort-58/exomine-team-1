@@ -1,5 +1,7 @@
 const database = {
-    transientState: {},
+    transientState: {
+        shoppingCart: []
+    },
     governors: [
         {id: 1, name: "Patricia Purdy", active: true, colonyId: 1},
         {id: 2, name: "Katrina Bahnhger ", active: true, colonyId: 2},
@@ -141,20 +143,45 @@ export const setColony = (colonyId) => {
     document.dispatchEvent( new CustomEvent("stateChanged") )
 }
 
-export const setMineral= (mineralId) => {
-    database.transientState.selectedMineral = mineralId
+export const setMineral= (facilityMineral) => {
+    let [,mineralId] = facilityMineral.split("--")
+    database.transientState.selectedMineral = parseInt(mineralId)
     document.dispatchEvent( new CustomEvent("stateChanged") )
 }
 export const setColonyMineral = (colonyMineralId) => {
     database.transientState.selectedColonyMineral = colonyMineralId
     document.dispatchEvent( new CustomEvent("stateChanged") )
 }
-export const setFacilityMineral= (facilityMineralId) => {
+export const setFacilityMineral = (facilityMineralId) => {
     database.transientState.selectedFacilityMineral = facilityMineralId
     document.dispatchEvent( new CustomEvent("stateChanged") )
 }
 
+export const addFacilityMineralToCart = () => {
+    let state = getTransientState()
+    let tempObject = {
+        facilityId: state.selectedFacility,
+        mineralId: state.selectedMineral
+    }
+    database.transientState.shoppingCart.push(tempObject)
+    document.dispatchEvent( new CustomEvent("stateChanged") )
+}
 
+export const removeFacilityMineralFromCart = (facilityMineral) => {
+    let state = getTransientState()
+    let [facilityId,mineralId] = facilityMineral.split("--")
+    state.shoppingCart.forEach((item, index) => {
+        if(item.facilityId === parseInt(facilityId) && item.mineralId === parseInt(mineralId)){
+            database.transientState.shoppingCart.splice(index, 1)
+            document.dispatchEvent( new CustomEvent("stateChanged"))
+        }
+    })
+}
+
+export const clearShoppingCart = () => {
+    database.transientState.shoppingCart = []
+    document.dispatchEvent( new CustomEvent("stateChanged"))
+}
 
 //Function that will be called when the button is clicked
 export const purchaseMineral = () => {
@@ -172,40 +199,51 @@ export const purchaseMineral = () => {
     //look through colonyMinerals, finding where the colonyId and mineralId match transient state
     // using forEach to look through the copy of colonyMinerals
     // then using the index parameter to modify the correct record in the real database's colonyminerals
-    colonyMinerals.forEach((colonyMineral, index) =>  {
-        if(colonyMineral.colonyId === state.selectedColony){
-            if(colonyMineral.mineralId === state.selectedMineral){
-                foundColonyMineral = true
-                database.colonyMinerals[index].quantity++ //increase the quantity
+
+
+    state.shoppingCart.forEach((cartItem) => {
+        let colonyMinerals = getColonyMinerals()
+        foundColonyMineral = false
+        colonyMinerals.forEach((colonyMineral, index) =>  {
+            if(colonyMineral.colonyId === state.selectedColony){
+                if(colonyMineral.mineralId === cartItem.mineralId){
+                    foundColonyMineral = true
+                    database.colonyMinerals[index].quantity++ //increase the quantity
+                }
+            } 
+        })
+            //if the colonyMineral didn't exist yet, create it
+            if(foundColonyMineral === false){
+                database.colonyMinerals.push(
+                    {
+                        id: database.colonyMinerals.length + 1,
+                        mineralId: cartItem.mineralId,
+                        colonyId: state.selectedColony,
+                        quantity: 1
+                    }
+                )
             }
-        } 
+            //look through the facilityMinerals to find the one that was purchased and decrease the quantity
+            // using forEach to look through the copy of facilityMinerals
+            // then using the index parameter to modify the correct record in the real database's facilityMinerals
+            facilityMinerals.forEach((facilityMineral, index) => {
+                if(facilityMineral.facilityId === cartItem.facilityId){
+                    if(facilityMineral.mineralId === cartItem.mineralId){
+                        database.facilityMinerals[index].quantity--
+                    }
+                }
+            })
+
     })
 
-    //if the colonyMineral didn't exist yet, create it
-    if(foundColonyMineral === false){
-        database.colonyMinerals.push(
-            {
-                id: database.colonyMinerals.length + 1,
-                mineralId: state.selectedMineral,
-                colonyId: state.selectedColony,
-                quantity: 1
-            }
-        )
-    }
 
-    //look through the facilityMinerals to find the one that was purchased and decrease the quantity
-    // using forEach to look through the copy of facilityMinerals
-    // then using the index parameter to modify the correct record in the real database's facilityMinerals
-    facilityMinerals.forEach((facilityMineral, index) => {
-        if(facilityMineral.facilityId === state.selectedFacility){
-            if(facilityMineral.mineralId === state.selectedMineral){
-                database.facilityMinerals[index].quantity--
-            }
-        }
-    })
+
+
+
 
     //reset mineral in transient state, but keep the facility and governor (events will update state of all if they change facility of governor)
     database.transientState.selectedMineral = ""
+    database.transientState.shoppingCart = []
 
         // Broadcast custom event to entire documement so that the
         // application can re-render and update state

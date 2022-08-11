@@ -1,4 +1,4 @@
-import {getFacilityMinerals, getFacilities, getMinerals, setMineral, getTransientState, setFacility} from "./database.js"
+import {getFacilityMinerals, getFacilities, getMinerals, setMineral, getTransientState, setFacility, addFacilityMineralToCart, removeFacilityMineralFromCart } from "./database.js"
 
 
 
@@ -21,11 +21,13 @@ export const facilityMinerals = () => { //creates the facility mineral header an
                     for (let mineral of minerals) {
                         if (mineral.id === facilityMineral.mineralId && facilityMineral.quantity > 0) {
                             let selected = ""
-                            if(transientState.selectedMineral === mineral.id){
-                                selected = "checked"
+                            for(let cart of transientState.shoppingCart){
+                                if(cart.mineralId === facilityMineral.mineralId && cart.facilityId === facilityMineral.facilityId){
+                                    selected = "checked"
+                                }
                             }
                             HTMLstr +=`<li>
-                            <input ${selected} type="radio" name="mineral" value="${facilityMineral.mineralId}" /> ${facilityMineral.quantity} tons of ${mineral.name}
+                            <input ${selected} type="checkbox" name="mineral" value="${facilityMineral.facilityId}--${facilityMineral.mineralId}" /> ${facilityMineral.quantity} tons of ${mineral.name}
                             </li>`
                         }
                     }
@@ -42,7 +44,12 @@ document.addEventListener(
     "change",
     (event) => {
         if (event.target.name === "mineral") {
-            setMineral(parseInt(event.target.value))  //pushes selectedMineral key into transient state
+            if(event.target.checked === false){
+                removeFacilityMineralFromCart(event.target.value)
+            } else {
+            setMineral(event.target.value)  //pushes selectedMineral key into transient state
+            addFacilityMineralToCart() //adds the facility mineral to the shopping cart array
+            }
         }
         
     }
